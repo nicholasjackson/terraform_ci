@@ -41,12 +41,32 @@ workflows:
               only: /.*/
             branches:
               only: /.*/
-      - apply:
+
+      - hold:
+          type: approval
+          requires:
+           - plan
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              only: /master/
+
+      - apply-manual:
+          requires:
+            - hold
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              only: /master/
+
+      - apply-auto:
           requires:
             - plan
           filters:
             tags:
               only: /.*/
             branches:
-              only: /.*/
+              only: /dev|staging/
 
