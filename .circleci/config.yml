@@ -30,7 +30,8 @@ jobs:
       - run:
           name: Terraform apply
           command: |
-            terraform apply ${CIRCLE_BRANCH}.plan
+            cp -R /tmp/workspace/.terraform .
+            terraform apply /tmp/workspace/plan/${CIRCLE_BRANCH}.out
   
   apply-auto:
     docker:
