@@ -10,8 +10,8 @@ jobs:
       - run:
           name: Terraform plan
           command: |
-            terraform workspace select ${CIRCLE_BRANCH} 
             terraform init
+            terraform workspace select ${CIRCLE_BRANCH} 
             terraform plan
       - persist_to_workspace:
           root: ./
