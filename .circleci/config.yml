@@ -11,6 +11,7 @@ jobs:
           name: Terraform plan
           command: |
             terraform workspace select ${CIRCLE_BRANCH} 
+            terraform init
             terraform plan
       - persist_to_workspace:
           root: ./
