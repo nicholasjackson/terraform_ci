@@ -10,7 +10,7 @@ jobs:
       - run:
           name: Terraform plan
           command: |
-            mkdir plan
+            mkdir -p plan
             terraform init
             terraform workspace select ${CIRCLE_BRANCH} 
             terraform plan -out=plan/${CIRCLE_BRANCH}.out
