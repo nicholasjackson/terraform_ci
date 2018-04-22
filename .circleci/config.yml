@@ -13,11 +13,11 @@ jobs:
             mkdir plan
             terraform init
             terraform workspace select ${CIRCLE_BRANCH} 
-            terraform plan -out=plan/plan.out
+            terraform plan -out=plan/${CIRCLE_BRANCH}.out
       - persist_to_workspace:
           root: ./
           paths:
-            - plan/plan.out
+            - plan/
             - .terraform
 
   apply-manual:
@@ -42,7 +42,7 @@ jobs:
       - run:
           name: Terraform apply
           command: |
-            terraform apply plan/plan.out
+            terraform apply plan/${CIRCLE_BRANCH}.out
 
 workflows:
   version: 2
