@@ -3,6 +3,7 @@ provider "digitalocean" {}
 terraform {
   backend "s3" {
     bucket   = "tf-remote-state"
+    key      = "tide/terraform.tfstate"
     region   = "us-east-1"
     endpoint = "https://nyc3.digitaloceanspaces.com"
 
