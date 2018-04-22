@@ -1,0 +1,52 @@
+version: 2
+jobs:
+  plan:
+    docker:
+      - image: nicholasjackson/hashicorp-ci:latest
+    steps:
+      - checkout
+      - run:
+          command: mkdir plan
+      - run:
+          name: Terraform plan
+          command: |
+            terraform workspace select ${CIRCLE_BRANCH} 
+            terraform plan
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - plan/plan.out
+            - .terraform
+
+  apply:
+    docker:
+      - image: nicholasjackson/hashicorp-ci:latest
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Terraform apply
+          command: |
+            terraform workspace select ${CIRCLE_BRANCH} 
+            terraform plan
+
+workflows:
+  version: 2
+  plan-and-apply:
+    jobs:
+      - plan:
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              only: /.*/
+      - apply:
+          requires:
+            - plan
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              only: /master/
+
