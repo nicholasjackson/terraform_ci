@@ -42,7 +42,8 @@ jobs:
       - run:
           name: Terraform apply
           command: |
-            terraform apply plan/${CIRCLE_BRANCH}.out
+            cp -R /tmp/workspace/.terraform .
+            terraform apply /tmp/workspace/plan/${CIRCLE_BRANCH}.out
 
 workflows:
   version: 2
