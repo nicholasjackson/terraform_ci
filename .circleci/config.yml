@@ -32,19 +32,6 @@ jobs:
           command: |
             cp -R /tmp/workspace/.terraform .
             terraform apply /tmp/workspace/plan/${CIRCLE_BRANCH}.out
-  
-  apply-auto:
-    docker:
-      - image: nicholasjackson/hashicorp-ci:latest
-    steps:
-      - checkout
-      - attach_workspace:
-          at: /tmp/workspace
-      - run:
-          name: Terraform apply
-          command: |
-            cp -R /tmp/workspace/.terraform .
-            terraform apply /tmp/workspace/plan/${CIRCLE_BRANCH}.out
 
 workflows:
   version: 2
@@ -74,14 +61,4 @@ workflows:
             tags:
               only: /.*/
             branches:
-              only: /master/
-
-      - apply-auto:
-          requires:
-            - plan
-          filters:
-            tags:
               only: /.*/
-            branches:
-              only: /dev|staging/
-
