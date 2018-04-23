@@ -15,9 +15,10 @@ terraform {
   }
 }
 
-resource "digitalocean_droplet" "web" {
-  image  = "ubuntu-14-04-x64"
-  name   = "${terraform.workspace}-web-1"
-  region = "nyc3"
-  size   = "512mb"
+variable "instance_count" {
+  default = 1
+}
+
+variable "region" {
+  default = "nyc3"
 }
