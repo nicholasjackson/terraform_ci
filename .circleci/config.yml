@@ -52,7 +52,7 @@ workflows:
             tags:
               only: /.*/
             branches:
-              only: /master/
+              only: /.*/
 
       - apply-manual:
           requires:
