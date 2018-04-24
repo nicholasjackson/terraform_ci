@@ -13,6 +13,7 @@ jobs:
             mkdir -p plan
             terraform version
             terraform init
+            if [ $? -ne 0]; then; terraform init; fi
             terraform workspace select ${CIRCLE_BRANCH} 
             terraform plan -out=plan/${CIRCLE_BRANCH}.out
       - persist_to_workspace:
