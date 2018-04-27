@@ -2,7 +2,7 @@ provider "digitalocean" {}
 
 terraform {
   backend "s3" {
-    bucket   = "tf-remote-state"
+    bucket   = "tide2018"
     key      = "tide/terraform.tfstate"
     region   = "us-east-1"
     endpoint = "https://nyc3.digitaloceanspaces.com"
@@ -16,7 +16,7 @@ terraform {
 }
 
 variable "instance_count" {
-  default = 1
+  default = 2
 }
 
 variable "region" {
