@@ -2,7 +2,7 @@ provider "digitalocean" {}
 
 terraform {
   backend "s3" {
-    bucket   = "tf-remote-state"
+    bucket   = "tide2018"
     key      = "tide/terraform.tfstate"
     region   = "us-east-1"
     endpoint = "https://nyc3.digitaloceanspaces.com"
@@ -15,9 +15,10 @@ terraform {
   }
 }
 
-resource "digitalocean_droplet" "web" {
-  image  = "ubuntu-14-04-x64"
-  name   = "${terraform.workspace}-web-1"
-  region = "nyc3"
-  size   = "512mb"
+variable "instance_count" {
+  default = 2
+}
+
+variable "region" {
+  default = "nyc3"
 }
