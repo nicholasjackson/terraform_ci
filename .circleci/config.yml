@@ -65,7 +65,7 @@ workflows:
 
       - apply-manual:
           requires:
-            - hold
+            - plan
           filters:
             tags:
               only: /.*/
@@ -82,9 +82,19 @@ workflows:
             branches:
               only: master
 
+      - hold:
+          type: approval
+          requires:
+           - plan
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              only: master
+
       - apply-manual:
           requires:
-            - plan
+            - hold
           filters:
             tags:
               only: /.*/
