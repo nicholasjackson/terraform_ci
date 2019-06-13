@@ -6,13 +6,13 @@ jobs:
     steps:
       - checkout
       - run:
-        name: prepare token
-        command: |
-          $ { cat << EOF; } > $HOME/.terraformrc
-          credentials "app.terraform.io" {
-            token = "${TF_TOKEN}"
-          }
-          EOF
+          name: Prepare Terraform token
+          command: |
+            $ { cat << EOF; } > $HOME/.terraformrc
+            credentials "app.terraform.io" {
+              token = "${TF_TOKEN}"
+            }
+            EOF
 
       - run:
           command: mkdir plan
