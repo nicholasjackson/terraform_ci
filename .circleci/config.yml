@@ -5,6 +5,15 @@ jobs:
       - image: nicholasjackson/hashicorp-ci:latest
     steps:
       - checkout
+      -run:
+        name: prepare token
+        command: |
+          $ { cat << EOF; } > $HOME/.terraformrc
+          credentials "app.terraform.io" {
+            token = "${TF_TOKEN}"
+          }
+          EOF
+
       - run:
           command: mkdir plan
       - run:

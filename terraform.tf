@@ -1,17 +1,14 @@
-provider "digitalocean" {}
+provider "digitalocean" {
+}
 
 terraform {
-  backend "s3" {
-    bucket   = "tide2018"
-    key      = "tide/terraform.tfstate"
-    region   = "us-east-1"
-    endpoint = "https://nyc3.digitaloceanspaces.com"
+  backend "remote" {
+    hostname     = "app.terraform.io"
+    organization = "pinkyandthebrain"
 
-    skip_region_validation      = true
-    skip_credentials_validation = true
-    skip_get_ec2_platforms      = true
-    skip_requesting_account_id  = true
-    skip_metadata_api_check     = true
+    workspaces {
+      prefix = "terraform_ci"
+    }
   }
 }
 
@@ -22,3 +19,4 @@ variable "instance_count" {
 variable "region" {
   default = "nyc3"
 }
+
