@@ -53,6 +53,26 @@ jobs:
 
 workflows:
   version: 2
+  auto-apply:
+    jobs:
+      - plan:
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: 
+                - master
+
+      - apply-manual:
+          requires:
+            - hold
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: 
+                - master
+
   plan-and-apply:
     jobs:
       - plan:
@@ -60,7 +80,7 @@ workflows:
             tags:
               only: /.*/
             branches:
-              only: /.*/
+              only: master
 
       - hold:
           type: approval
@@ -70,7 +90,7 @@ workflows:
             tags:
               only: /.*/
             branches:
-              only: /.*/
+              only: master
 
       - apply-manual:
           requires:
@@ -79,4 +99,4 @@ workflows:
             tags:
               only: /.*/
             branches:
-              only: /.*/
+              only: master
