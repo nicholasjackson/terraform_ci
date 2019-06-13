@@ -8,7 +8,7 @@ jobs:
       - run:
           name: Prepare Terraform token
           command: |
-            $ { cat << EOF; } > $HOME/.terraformrc
+            { cat << EOF; } > $HOME/.terraformrc
             credentials "app.terraform.io" {
               token = "${TF_TOKEN}"
             }
