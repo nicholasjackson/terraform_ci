@@ -1,6 +1,6 @@
 resource "digitalocean_loadbalancer" "public" {
   name   = "${terraform.workspace}-loadbalancer"
-  region = "${var.region}"
+  region = var.region
 
   forwarding_rule {
     entry_port     = 80
@@ -15,29 +15,28 @@ resource "digitalocean_loadbalancer" "public" {
     protocol = "tcp"
   }
 
-  droplet_ids = ["${digitalocean_droplet.web.*.id}"]
+  droplet_ids = digitalocean_droplet.web.*.id
 }
 
 resource "digitalocean_firewall" "web" {
   name = "${terraform.workspace}-only-22-80-and-443"
 
-  droplet_ids = ["${digitalocean_droplet.web.*.id}"]
+  droplet_ids = digitalocean_droplet.web.*.id
 
-  inbound_rule = [
-    {
-      protocol         = "tcp"
-      port_range       = "22"
-      source_addresses = ["0.0.0.0/0", "::/0"]
-    },
-    {
-      protocol         = "tcp"
-      port_range       = "80"
-      source_addresses = ["0.0.0.0/0", "::/0"]
-    },
-    {
-      protocol         = "tcp"
-      port_range       = "443"
-      source_addresses = ["0.0.0.0/0", "::/0"]
-    },
-  ]
+  inbound_rule {
+    protocol         = "tcp"
+    port_range       = "22"
+    source_addresses = ["0.0.0.0/0", "::/0"]
+  }
+  inbound_rule {
+    protocol         = "tcp"
+    port_range       = "80"
+    source_addresses = ["0.0.0.0/0", "::/0"]
+  }
+  inbound_rule {
+    protocol         = "tcp"
+    port_range       = "443"
+    source_addresses = ["0.0.0.0/0", "::/0"]
+  }
 }
+

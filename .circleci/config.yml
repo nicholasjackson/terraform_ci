@@ -6,6 +6,15 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Prepare Terraform token
+          command: |
+            { cat << EOF; } > $HOME/.terraformrc
+            credentials "app.terraform.io" {
+              token = "${TF_TOKEN}"
+            }
+            EOF
+
+      - run:
           command: mkdir plan
       - run:
           name: Terraform plan
@@ -28,6 +37,14 @@ jobs:
       - checkout
       - attach_workspace:
           at: /tmp/workspace
+      - run:
+          name: Prepare Terraform token
+          command: |
+            { cat << EOF; } > $HOME/.terraformrc
+            credentials "app.terraform.io" {
+              token = "${TF_TOKEN}"
+            }
+            EOF
       - run:
           name: Terraform apply
           command: |
