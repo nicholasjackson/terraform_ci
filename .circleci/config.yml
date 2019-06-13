@@ -5,7 +5,7 @@ jobs:
       - image: nicholasjackson/hashicorp-ci:latest
     steps:
       - checkout
-      -run:
+      - run:
         name: prepare token
         command: |
           $ { cat << EOF; } > $HOME/.terraformrc
