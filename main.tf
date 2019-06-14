@@ -19,4 +19,3 @@ variable "instance_count" {
 variable "region" {
   default = "nyc3"
 }
-
