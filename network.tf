@@ -23,6 +23,24 @@ resource "digitalocean_firewall" "web" {
 
   droplet_ids = digitalocean_droplet.web.*.id
 
+  dynamic "inbound_rule" {
+    for_each = var.firewall_rules
+
+    /*
+    for_each = [for r in var.firewall_rules : {
+      protocol         = trimspace(r.protocol)
+      port_range       = r.port_range
+      source_addresses = r.source_addresses
+    }]
+    */
+
+    content {
+      protocol         = inbound_rule.value.protocol
+      port_range       = inbound_rule.value.port_range
+      source_addresses = inbound_rule.value.source_addresses
+    }
+  }
+
   inbound_rule {
     protocol         = "tcp"
     port_range       = "22"
