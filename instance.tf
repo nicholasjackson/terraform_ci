@@ -1,7 +1,7 @@
 resource "digitalocean_volume" "data" {
   count       = var.instance_count
   region      = var.region
-  name        = "${terraform.workspace}-${count.index}-data"
+  name        = "${terraform.workspace}-${count.index}-data1"
   size        = 100
   description = "an example volume"
 }
